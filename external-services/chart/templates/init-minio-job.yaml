@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: init-minio
-          image: minio/mc:RELEASE.2020-10-03T02-54-56Z
+          image: minio/mc:RELEASE.2022-04-07T21-43-27Z
           workingDir: /usr/local/etc/scripts
           command: ["/bin/sh", "./init.sh"]
           env:

@@ -18,9 +18,5 @@ spec:
       nodePort: 30002
       protocol: TCP
       name: minio
-    - port: 1491
-      nodePort: 30003
-      protocol: TCP
-      name: sonic
   selector:
     {{- include "jet-external-services.selectorLabels" . | nindent 4 }}

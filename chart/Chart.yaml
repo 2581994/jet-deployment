@@ -23,6 +23,3 @@ version: 0.2.2
 appVersion: 1.16.0
 
 dependencies:
-  - name: scixir
-    version: 0.1.0
-    repository: "file://./dependencies/scixir"

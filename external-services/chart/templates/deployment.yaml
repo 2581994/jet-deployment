@@ -28,47 +28,17 @@ spec:
           volumeMounts:
             - name: postgres-persistent-storage
               mountPath: /var/lib/postgresql/data/
-        - name: sonic
-          image: valeriansaliou/sonic:v1.3.0
-          imagePullPolicy: IfNotPresent
-          command: ["sonic", "-c", "/usr/local/ect/sonic/sonic.cfg"]
-          ports:
-            - containerPort: 1491
-              protocol: TCP
-          volumeMounts:
-            - name: sonic-cfg-volume
-              mountPath: /usr/local/ect/sonic
-            - name: sonic-persistent-storage
-              mountPath: /usr/src/sonic/
-        - name: minioredis
-          image: redis:6.0-alpine
-          imagePullPolicy: IfNotPresent
-          command: ["redis-server", "/usr/local/ect/redis/redis.conf"]
-          ports:
-            - containerPort: 6379
-              protocol: TCP
-          volumeMounts:
-            - name: minioredis-conf-volume
-              mountPath: /usr/local/ect/redis
-            - name: minioredis-persistent-storage
-              mountPath: /data
         - name: minio
-          image: minio/minio:RELEASE.2020-10-27T04-03-55Z
+          image: minio/minio:RELEASE.2022-03-24T00-43-44Z
           imagePullPolicy: IfNotPresent
           command: ["minio", "server", "/data"]
           env:
-            - name: MINIO_ACCESS_KEY
-              value: minio
-            - name: MINIO_SECRET_KEY
-              value: minio123
-            - name: MINIO_NOTIFY_REDIS_ENABLE
-              value: "on"
-            - name: MINIO_NOTIFY_REDIS_FORMAT
-              value: access
-            - name: MINIO_NOTIFY_REDIS_ADDRESS
-              value: "localhost:6379"
-            - name: MINIO_NOTIFY_REDIS_KEY
-              value: minio_events
+            - name: MINIO_ROOT_USER
+              value: minioadmin
+            - name: MINIO_ROOT_PASSWORD
+              value: minioadmin
+            - name: MINIO_BROWSER
+              value: "off"
           ports:
             - containerPort: 9000
               protocol: TCP
@@ -79,26 +49,6 @@ spec:
         - name: postgres-persistent-storage
           hostPath:
             path: {{ include "jet-external-services.build-volume-path" (merge (dict "storageName" "postgres") $) }}
-            type: DirectoryOrCreate
-        - name: sonic-cfg-volume
-          configMap:
-            name: {{ .Release.Name }}-configmap
-            items:
-              - key: sonic.cfg
-                path: sonic.cfg
-        - name: sonic-persistent-storage
-          hostPath:
-            path: {{ include "jet-external-services.build-volume-path" (merge (dict "storageName" "sonic") $) }}
-            type: DirectoryOrCreate
-        - name: minioredis-conf-volume
-          configMap:
-            name: {{ .Release.Name }}-configmap
-            items:
-              - key: minioredis.conf
-                path: redis.conf
-        - name: minioredis-persistent-storage
-          hostPath:
-            path: {{ include "jet-external-services.build-volume-path" (merge (dict "storageName" "minio/redis") $) }}
             type: DirectoryOrCreate
         - name: minio-persistent-storage
           hostPath:

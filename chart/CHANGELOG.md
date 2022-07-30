@@ -1,3 +1,7 @@
+### 0.3.0
+- update `minio` to 2022 release
+- remove `scixir` from dependencies
+
 ### 0.2.2
 - remove aircrew from the chart
 

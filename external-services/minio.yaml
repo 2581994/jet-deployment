@@ -1,38 +1,17 @@
 version: '3.2'
 services:
-  # minio_redis is invalid. https://github.com/minio/minio/blob/df9894e275bc2e533208921d0f3992d4f94af3a7/pkg/net/host.go#L27
-  minioredis:
-    image: redis:6.0-alpine
-    env_file:
-      - external-services.env
-      - external-services.local.env
-    volumes:
-      - ./volume/config/minio/redis:/usr/local/etc/redis
-      - ./volume/data/minio/redis:/data
-    command:
-      - sh
-      - -c
-      - |
-        redis-server $$MINIO_REDIS_CONFIG_PATH
-    restart: unless-stopped
-    expose:
-      - 6379
-    ports:
-      - "6389:6379"
-    networks:
-      - external-services-network
   minio:
-    image: minio/minio:RELEASE.2020-10-27T04-03-55Z
+    image: minio/minio:RELEASE.2022-04-01T03-41-39Z
     volumes:
       - ./volume/data/minio/data:/data
+    environment:
+      - MINIO_BROWSER=off
     env_file:
       - external-services.env
       - external-services.local.env
-    command: server --address :9090 /data
-    depends_on:
-      - minioredis
+    command: server /data
     restart: unless-stopped
     ports:
-      - 9090:9090
+      - 9000:9000
     networks:
       - external-services-network

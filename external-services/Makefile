@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-names := docker-compose sonic postgresql minio
+names := docker-compose postgresql minio
 files := $(foreach name,$(names), -f $(name).yaml )
 
 .PHONY: help up down ps

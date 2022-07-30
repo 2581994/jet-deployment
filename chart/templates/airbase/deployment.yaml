@@ -1,3 +1,11 @@
+{{- $volumesHostPath := .Values.airbaseVolumesHostPath -}}
+
+{{- if $volumesHostPath | empty | not -}}
+{{- if $volumesHostPath | isAbs | not -}}
+{{- fail "Expect the `.Values.airbaseVolumesHostPath` an absolute path, or unset to disable it" -}}
+{{- end -}}
+{{- end -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,10 +34,6 @@ spec:
             - configMapRef:
                 name: {{ include "jet-chart.fullname" . }}-postgresql
             - configMapRef:
-                name: {{ include "jet-chart.fullname" . }}-generic-sonic
-            - configMapRef:
-                name: {{ include "jet-chart.fullname" . }}-users-names-sonic
-            - configMapRef:
                 name: {{ include "jet-chart.fullname" . }}-minio
             - configMapRef:
                 name: {{ include "jet-chart.fullname" . }}-airbase
@@ -39,7 +43,22 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.airbase.resources | nindent 12 }}
+
+          {{- if $volumesHostPath | empty | not }}
+          volumeMounts:
+            - name: airbase-apps-storage
+              mountPath: /data
+          {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+      {{- if $volumesHostPath | empty | not }}
+      volumes:
+        - name: airbase-apps-storage
+          hostPath:
+            path: {{ $volumesHostPath }}
+            type: DirectoryOrCreate
+      {{- end -}}

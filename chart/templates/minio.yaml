@@ -1,5 +1,4 @@
 {{- $rules := list }}
-{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`/minio`)" .Values.minioHost) }}
 {{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`/%s`)" .Values.minioHost .Values.airbaseOSSPrivateBucket) }}
 {{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`/%s`)" .Values.minioHost .Values.airbaseOSSPublicBucket) }}
 
@@ -27,7 +26,7 @@ spec:
       kind: Rule
       services:
         - name: {{ include "jet-chart.fullname" $ }}-minio
-          port: 9090
+          port: 9000
       middlewares:
         {{- range $webMiddlewares }}
         - name: {{ include "jet-chart.fullname" $ }}-{{ . }}
@@ -50,12 +49,11 @@ spec:
       kind: Rule
       services:
         - name: {{ include "jet-chart.fullname" $ }}-minio
-          port: 9090
+          port: 9000
       middlewares:
         {{- range $websecureMiddlewares }}
         - name: {{ include "jet-chart.fullname" $ }}-{{ . }}
         {{- end}}
-      tls: {}
     {{- end }}
   tls:
     secretName: {{ include "jet-chart.fullname" $ }}-mimio-tls-secret

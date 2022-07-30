@@ -50,6 +50,11 @@ airbaseLoggerLevel: info
 airbaseOSSPrivateBucket: minio-private
 airbaseOSSPublicBucket: minio-public
 
+airbaseStorageDatabaseFileFieldFilesizeMax: 10485760
+airbaseStorageDatabaseTransportationImportationSourceFilesizeMax: 10485760
+airbaseStorageDatabaseTransportationImportationFailureFilesizeMax: 10485760
+airbaseStorageSandboxProgramFilesizeMax: 10485760
+
 airbaseAlixirSMSAccessKeyID: abc
 airbaseAlixirSMSAccessSecret: overwriteit
 airbaseAlixirSMSAccessVerificationCodeSignName: 了了科技
@@ -57,6 +62,8 @@ airbaseAlixirSMSAccessVerificationCodeTemplateCode: changeti
 
 airbaseSentryDsn: ""
 airbaseSentryRelease: beta
+
+airbaseJokenSigner: "$ecrEt"
 
 airbaseWechatAppID: ""
 airbaseWechatSecret: ""
@@ -69,6 +76,8 @@ airbaseCacheBufferSize: 1
 airbaseOpsLiveDashboardUsername: ""
 airbaseOpsLiveDashboardPassword: ""
 
+# for app installation
+airbaseVolumesHostPath:
 
 # [PostgreSQL]
 postgresqlUser: postgres
@@ -81,30 +90,11 @@ postgresqlEventStoreDatabase: eventstore_prod
 postgresqlEventStorePoolSize: 60
 
 # [Minio]
-minioAccessKey: minio
-minioSecretKey: minio123
+minioRootUser: minioadmin
+minioRootPassword: minioadmin
 minioScheme: http://
 minioHost: oss.jet.localhost
 minioTLSSecret:
 minioPort: 80
 minioServiceIP: 10.0.0.18
-minioServicePort: 9090
-minioredisIP: 10.0.0.18
-minioredisPort: 6389
-
-# [Sonic]
-sonicGenericIP: 10.0.0.18
-sonicGenericPort: 1491
-sonicGenericPassword: SecretPassword
-sonicUsersNamesIP: 10.0.0.18
-sonicUsersNamesPort: 1492
-sonicUsersNamesPassword: SecretPassword
-
-# Dependencies
-
-# [Scixir]
-scixir: {}
-  # SET IT
-  # minioRedisUrl: redis://{{ include "jet-chart.fullname" . }}-minioredis:6379/0
-  # SET IT
-  # minioHost: {{ include "jet-chart.fullname" . }}-minio
+minioServicePort: 9000

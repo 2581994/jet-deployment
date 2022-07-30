@@ -57,21 +57,6 @@ postgresqlIP: 10.0.0.18
 
 # [Minio]
 minioServiceIP: 10.0.0.18
-minioredisIP: 10.0.0.18
-
-# [Sonic]
-sonicGenericIP: 10.0.0.18
-sonicUsersNamesIP: 10.0.0.18
-```
-
-5. setup scixir
-```yaml
-# values.local.yaml
-
-# setup scixir
-scixir:
-  minioRedisUrl: redis://{{ release-name }}-jet-chart-minioredis:6379/0
-  minioHost: {{ release-name }}-jet-chart-minio
 ```
 
 ## Commands
@@ -93,11 +78,6 @@ make install RELEASE=workflow
 ```
 
 ## HowTo
-
-### Build dependencies
-```bash
-helm dependencies build
-```
 
 ### Setup TLS
 ```yaml

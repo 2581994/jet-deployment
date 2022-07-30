@@ -5,8 +5,11 @@ metadata:
   labels:
     {{- include "jet-chart.labels" . | nindent 4 }}
 data:
-  MINIO_ACCESS_KEY: {{ .Values.minioAccessKey | quote }}
-  MINIO_SECRET_KEY: {{ .Values.minioSecretKey | quote }}
-  JET_MINIO_SCHEME: {{ .Values.minioScheme }}
-  JET_MINIO_HOST: {{ .Values.minioHost }}
-  JET_MINIO_PORT: {{ .Values.minioPort | quote }}
+  MINIO_ROOT_USER: {{ .Values.minioRootUser | quote }}
+  MINIO_ROOT_PASSWORD: {{ .Values.minioRootPassword | quote }}
+  JET_STORAGE_SCHEME: {{ .Values.minioScheme }}
+  JET_STORAGE_HOST: {{ .Values.minioHost }}
+  JET_STORAGE_PORT: {{ .Values.minioPort | quote }}
+  JET_STORAGE_FASTLINE_SCHEME: "http://"
+  JET_STORAGE_FASTLINE_HOST: {{ include "jet-chart.fullname" . }}-minio
+  JET_STORAGE_FASTLINE_PORT: "9000"

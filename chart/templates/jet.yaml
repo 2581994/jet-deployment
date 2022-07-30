@@ -61,7 +61,6 @@ spec:
         {{- range $websecureMiddlewares }}
         - name: {{ include "jet-chart.fullname" $ }}-{{ . }}
         {{- end}}
-      tls: {}
     {{- end }}
   tls:
     secretName: {{ include "jet-chart.fullname" $ }}-jet-tls-secret

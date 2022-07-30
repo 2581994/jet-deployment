@@ -18,4 +18,3 @@ make install
 |----------|-------|
 | Postgres | 30001 |
 | MinIO    | 30002 |
-| Sonic    | 30001 |

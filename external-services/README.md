@@ -10,7 +10,6 @@ make up
 
 ```bash
 cp volume/config/postgresql/postgresql.sample.conf volume/config/postgresql/postgresql.conf
-cp volume/config/minio/redis/redis.sample.conf volume/config/minio/redis/redis.conf
 ```
 
 2. setup the local env file
@@ -21,12 +20,11 @@ touch external-services.local.env
 ```env
 # external-services.local.env
 POSTGRES_CONFIG_PATH="/usr/local/etc/postgresql/postgresql.conf"
-MINIO_REDIS_CONFIG_PATH="/usr/local/etc/redis/redis.conf"
 ```
 
 3. Start services
 ```bash
-docker-compose -f docker-compose.yaml -f sonic.yaml -f postgresql.yaml -f minio.yaml up -d
+docker-compose -f docker-compose.yaml -f postgresql.yaml -f minio.yaml up -d
 ```
 
 #### Misc

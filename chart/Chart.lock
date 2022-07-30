@@ -1,6 +1,1 @@
 dependencies:
-- name: scixir
-  repository: file://./dependencies/scixir
-  version: 0.1.0
-digest: sha256:45bd5d7f919aa2a958ed0c867282e366d61a4dfeb2f9f546c0787923a7b5258c
-generated: "2021-04-20T22:20:26.596037+08:00"
